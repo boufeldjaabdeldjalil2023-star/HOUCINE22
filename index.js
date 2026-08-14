@@ -33,11 +33,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
   if (interaction.commandName === 'welcome') {
     const welcomeChannel = interaction.guild.channels.cache.find(
-      channel => channel.name === 'الترحيب'
+      channel => channel.name === 'welcome'
     );
 
     if (!welcomeChannel) {
-      await interaction.reply('❌ ما لقيتش روم #الترحيب.');
+      await interaction.reply('❌ ما لقيتش روم #welcome.');
       return;
     }
 
@@ -45,13 +45,13 @@ client.on(Events.InteractionCreate, async (interaction) => {
       `👋 مرحبًا بك ${interaction.user} في **HOUCINE22**! 🎉\nنتمنى لك وقتًا ممتعًا معنا ❤️`
     );
 
-    await interaction.reply('✅ تم إرسال رسالة الترحيب في #الترحيب!');
+    await interaction.reply('✅ تم إرسال رسالة الترحيب في #welcome!');
   }
 });
 
 client.on(Events.GuildMemberAdd, async (member) => {
   const welcomeChannel = member.guild.channels.cache.find(
-    channel => channel.name === 'الترحيب'
+    channel => channel.name === 'welcome'
   );
 
   if (!welcomeChannel) return;
