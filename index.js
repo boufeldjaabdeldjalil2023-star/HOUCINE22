@@ -21,6 +21,14 @@ client.on(Events.InteractionCreate, async (interaction) => {
   if (interaction.commandName === 'ping') {
     await interaction.reply('🏓 Pong! البوت شغال!');
   }
+
+  if (interaction.commandName === 'help') {
+    await interaction.reply(
+      '🤖 **أوامر HOUCINE22 Bot**\n\n' +
+      '🏓 `/ping` — اختبار البوت\n' +
+      '📖 `/help` — عرض أوامر البوت'
+    );
+  }
 });
 
 client.login(process.env.DISCORD_TOKEN);
