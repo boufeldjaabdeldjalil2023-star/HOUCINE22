@@ -27,7 +27,8 @@ client.on(Events.InteractionCreate, async (interaction) => {
       '🤖 **أوامر HOUCINE22 Bot**\n\n' +
       '🏓 `/ping` — اختبار البوت\n' +
       '📖 `/help` — عرض أوامر البوت\n' +
-      '👋 `/welcome` — اختبار رسالة الترحيب'
+      '👋 `/welcome` — اختبار رسالة الترحيب\n' +
+      '🧹 `/clear` — حذف الرسائل (للمشرفين)'
     );
   }
 
@@ -46,6 +47,42 @@ client.on(Events.InteractionCreate, async (interaction) => {
     );
 
     await interaction.reply('✅ تم إرسال رسالة الترحيب في #welcome!');
+  }
+
+  if (interaction.commandName === 'clear') {
+    if (!interaction.member.permissions.has('ManageMessages')) {
+      await interaction.reply({
+        content: '❌ ما عندكش صلاحية حذف الرسائل.',
+        ephemeral: true
+      });
+      return;
+    }
+
+    const amount = interaction.options.getInteger('amount');
+
+    if (amount < 1 || amount > 100) {
+      await interaction.reply({
+        content: '❌ العدد لازم يكون بين 1 و100.',
+        ephemeral: true
+      });
+      return;
+    }
+
+    await interaction.deferReply({ ephemeral: true });
+
+    try {
+      const deleted = await interaction.channel.bulkDelete(amount, true);
+
+      await interaction.editReply(
+        `🧹 تم حذف ${deleted.size} رسالة بنجاح!`
+      );
+    } catch (error) {
+      console.error(error);
+
+      await interaction.editReply(
+        '❌ ما قدرتش نحذف الرسائل. تأكد أن البوت عنده صلاحية Manage Messages.'
+      );
+    }
   }
 });
 
