@@ -1,4 +1,5 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, Events } = require('discord.js');
+const http = require('http');
 
 const client = new Client({
   intents: [
@@ -10,12 +11,19 @@ const client = new Client({
   ]
 });
 
-client.once('ready', () => {
+client.once(Events.ClientReady, (client) => {
   console.log(`Bot connected as ${client.user.tag}`);
 });
 
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+
+  if (interaction.commandName === 'ping') {
+    await interaction.reply('🏓 Pong! البوت شغال!');
+  }
+});
+
 client.login(process.env.DISCORD_TOKEN);
-const http = require('http');
 
 const PORT = process.env.PORT || 10000;
 
