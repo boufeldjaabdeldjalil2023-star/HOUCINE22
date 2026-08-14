@@ -9,6 +9,11 @@ const commands = [
   new SlashCommandBuilder()
     .setName('help')
     .setDescription('Shows the bot commands')
+    .toJSON(),
+
+  new SlashCommandBuilder()
+    .setName('welcome')
+    .setDescription('Sends a welcome message')
     .toJSON()
 ];
 
