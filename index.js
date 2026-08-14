@@ -15,7 +15,6 @@ client.once(Events.ClientReady, (client) => {
   console.log(`Bot connected as ${client.user.tag}`);
 });
 
-// أوامر البوت
 client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
@@ -27,12 +26,29 @@ client.on(Events.InteractionCreate, async (interaction) => {
     await interaction.reply(
       '🤖 **أوامر HOUCINE22 Bot**\n\n' +
       '🏓 `/ping` — اختبار البوت\n' +
-      '📖 `/help` — عرض أوامر البوت'
+      '📖 `/help` — عرض أوامر البوت\n' +
+      '👋 `/welcome` — اختبار رسالة الترحيب'
     );
+  }
+
+  if (interaction.commandName === 'welcome') {
+    const welcomeChannel = interaction.guild.channels.cache.find(
+      channel => channel.name === 'الترحيب'
+    );
+
+    if (!welcomeChannel) {
+      await interaction.reply('❌ ما لقيتش روم #الترحيب.');
+      return;
+    }
+
+    await welcomeChannel.send(
+      `👋 مرحبًا بك ${interaction.user} في **HOUCINE22**! 🎉\nنتمنى لك وقتًا ممتعًا معنا ❤️`
+    );
+
+    await interaction.reply('✅ تم إرسال رسالة الترحيب في #الترحيب!');
   }
 });
 
-// ترحيب بالأعضاء الجدد
 client.on(Events.GuildMemberAdd, async (member) => {
   const welcomeChannel = member.guild.channels.cache.find(
     channel => channel.name === 'الترحيب'
