@@ -1,4 +1,4 @@
-const { REST, Routes, SlashCommandBuilder } = require('discord.js');
+const { REST, Routes, SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 
 const commands = [
   new SlashCommandBuilder()
@@ -14,6 +14,20 @@ const commands = [
   new SlashCommandBuilder()
     .setName('welcome')
     .setDescription('Sends a welcome message')
+    .toJSON(),
+
+  new SlashCommandBuilder()
+    .setName('clear')
+    .setDescription('Deletes messages from the channel')
+    .addIntegerOption(option =>
+      option
+        .setName('amount')
+        .setDescription('Number of messages to delete')
+        .setMinValue(1)
+        .setMaxValue(100)
+        .setRequired(true)
+    )
+    .setDefaultMemberPermissions(PermissionFlagsBits.ManageMessages)
     .toJSON()
 ];
 
